@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile.prod
     ports: 
-      - 8080:8080 
+      - 8000:8000 
     restart: on-failure
     volumes:
       - .:/usr/src/app/
