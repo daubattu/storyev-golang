@@ -31,6 +31,7 @@ WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage. Observe we also copied the .env file
 COPY --from=builder /usr/src/app/bin/storyev_api ./bin/storyev_api
+COPY --from=builder /usr/src/app/files .
 COPY --from=builder /usr/src/app/.env .
 
 # Expose port 8080 to the outside world

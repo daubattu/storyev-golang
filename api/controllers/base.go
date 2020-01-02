@@ -46,6 +46,14 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 
 	server.DB.Debug().AutoMigrate(&models.User{}, &models.Story{}) //database migration
 
+	err = server.DB.Exec(fmt.Sprintf("CREATE DATABASE IF NOT EXITS %s", DbName)).Error
+
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("Successfully created database..")
+	}
+
 	server.Router = mux.NewRouter()
 
 	server.initializeRoutes()
