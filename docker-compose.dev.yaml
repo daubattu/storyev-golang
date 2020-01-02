@@ -1,0 +1,52 @@
+version: '3'
+services:
+  api_dev:
+    container_name: storyev_dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    ports: 
+      - 8080:8080 
+    restart: on-failure
+    volumes:              # without this volume mapping to the directory of our project, live reloading won't happen
+      - .:/usr/src/app
+    depends_on:
+      - storyev_postgres_dev
+    networks:
+      - storyev_network_dev
+
+  storyev_postgres_dev:
+    image: postgres:12.1-alpine
+    container_name: storyev_postgres_dev
+    environment:
+      - POSTGRES_USER=${DB_USER}  
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - database_postgres_dev:/var/lib/postgresql/data
+    networks:
+      - storyev_network_dev
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: storyev_pgadmin_dev
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - storyev_postgres_dev
+    ports:
+      - 5050:80
+    networks:
+      - storyev_network_dev
+    restart: unless-stopped
+
+volumes:
+  database_postgres_dev:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  storyev_network_dev:
+    driver: bridge
