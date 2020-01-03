@@ -9,7 +9,6 @@ services:
       - 8000:8000 
     restart: on-failure
     volumes:
-      - .:/usr/src/app/
       - ./files:/usr/src/app/files
     depends_on:
       - storyev_postgres
