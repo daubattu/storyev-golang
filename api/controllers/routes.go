@@ -35,5 +35,10 @@ func (s *Server) initializeRoutes() {
 	s.Router.HandleFunc("/stories", middlewares.SetMiddlewareJSON(s.GetStories)).Methods("GET")
 	s.Router.HandleFunc("/stories", middlewares.SetMiddlewareJSON(s.CreateStory)).Methods("POST")
 	s.Router.HandleFunc("/stories/{id}", middlewares.SetMiddlewareJSON(s.DeleteStory)).Methods("DELETE")
+
+	s.Router.HandleFunc("/newwords", middlewares.SetMiddlewareJSON(s.GetNewWords)).Methods("GET")
+	s.Router.HandleFunc("/newwords", middlewares.SetMiddlewareJSON(s.CreateNewWord)).Methods("POST")
+	s.Router.HandleFunc("/newwords/{id}", middlewares.SetMiddlewareJSON(s.DeleteNewWord)).Methods("DELETE")
+
 	s.Router.HandleFunc("/upload", middlewares.SetMiddlewareFormData(s.UploadFile)).Methods("POST")
 }

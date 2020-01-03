@@ -13,10 +13,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type StoryBody struct {
-	Part int8
-}
-
 func (server *Server) CreateStory(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)

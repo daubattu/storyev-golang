@@ -10,7 +10,7 @@ import (
 type Story struct {
 	ID         uint32    `gorm:"primary_key;auto_increment" json:"id"`
 	Name       string    `gorm:"size:255;not null;" json:"name"`
-	Part       int8      `gorm:"size:255;not null;" json:"part"`
+	Part       uint8     `gorm:"size:255;not null;" json:"part"`
 	Audio      string    `gorm:"not null" json:"audio"`
 	English    string    `gorm:"not null" json:"en"`
 	Vietnamese string    `gorm:"not null" json:"vn"`
