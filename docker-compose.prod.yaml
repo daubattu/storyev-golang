@@ -9,7 +9,7 @@ services:
       - 8000:8000 
     restart: on-failure
     volumes:
-      - ./files:/usr/src/app/files
+      - ./files:/root/files #mount folder files uploads from container in production workdir /root/ to local
     depends_on:
       - storyev_postgres
     networks:
