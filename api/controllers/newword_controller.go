@@ -38,6 +38,36 @@ func (server *Server) CreateNewWord(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusCreated, newwordCreated)
 }
 
+func (server *Server) UpdateNewWord(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	uid, err := strconv.ParseUint(vars["id"], 10, 32)
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	}
+	newword := models.NewWord{}
+	err = json.Unmarshal(body, &newword)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	newwordUpdated, err := newword.UpdateNewWord(server.DB, uint32(uid))
+
+	if err != nil {
+
+		formattedError := utils.FormatError(err.Error())
+
+		responses.ERROR(w, http.StatusInternalServerError, formattedError)
+		return
+	}
+	w.Header().Set("Location", fmt.Sprintf("%s%s/%d", r.Host, r.RequestURI, newwordUpdated.ID))
+	responses.JSON(w, http.StatusCreated, newwordUpdated)
+}
+
 func (server *Server) DeleteNewWord(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	newword := models.NewWord{}

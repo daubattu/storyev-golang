@@ -38,6 +38,7 @@ func (s *Server) initializeRoutes() {
 
 	s.Router.HandleFunc("/newwords", middlewares.SetMiddlewareJSON(s.GetNewWords)).Methods("GET")
 	s.Router.HandleFunc("/newwords", middlewares.SetMiddlewareJSON(s.CreateNewWord)).Methods("POST")
+	s.Router.HandleFunc("/newwords/{id}", middlewares.SetMiddlewareJSON(s.UpdateNewWord)).Methods("PUT")
 	s.Router.HandleFunc("/newwords/{id}", middlewares.SetMiddlewareJSON(s.DeleteNewWord)).Methods("DELETE")
 
 	s.Router.HandleFunc("/upload", middlewares.SetMiddlewareFormData(s.UploadFile)).Methods("POST")

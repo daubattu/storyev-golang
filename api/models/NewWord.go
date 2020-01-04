@@ -59,6 +59,23 @@ func (nw *NewWord) CreateNewWord(db *gorm.DB) (*NewWord, error) {
 	return nw, nil
 }
 
+func (nw *NewWord) UpdateNewWord(db *gorm.DB, uid uint32) (*NewWord, error) {
+
+	var err error
+
+	err = db.Debug().Model(&NewWord{}).Where("id = ?", uid).Updates(NewWord{Part: nw.Part, StoryID: nw.StoryID, Word: nw.Word, Type: nw.Type, Spelling: nw.Spelling, AudioUS: nw.AudioUS, AudioUK: nw.AudioUK, Example: nw.Example}).Error
+	if err != nil {
+		return &NewWord{}, err
+	}
+	// if p.ID != 0 {
+	// 	err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+	// 	if err != nil {
+	// 		return &User{}, err
+	// 	}
+	// }
+	return nw, nil
+}
+
 func (nw *NewWord) DeleteNewWord(db *gorm.DB, id uint32) error {
 	var err error
 	err = db.Where("id = ?", id).Take(&NewWord{}).Delete(&NewWord{}).Error
