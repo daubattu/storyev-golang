@@ -47,7 +47,39 @@ func (s *Story) CreateStory(db *gorm.DB) (*Story, error) {
 	return s, nil
 }
 
-func (s *Story) DeleteStory(db *gorm.DB, id int8) error {
+func (s *Story) UpdateStory(db *gorm.DB, uid uint32) (*Story, error) {
+
+	var err error
+
+	err = db.Debug().Model(&Story{}).Where("id = ?", uid).Updates(Story{Name: s.Name, Part: s.Part, Audio: s.Audio, English: s.English, Vietnamese: s.Vietnamese}).Error
+	if err != nil {
+		return &Story{}, err
+	}
+	// if p.ID != 0 {
+	// 	err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+	// 	if err != nil {
+	// 		return &User{}, err
+	// 	}
+	// }
+	return s, nil
+}
+
+func (s *Story) GetStoryById(db *gorm.DB, id uint32) (*Story, error) {
+	var err error
+	err = db.Debug().Model(&Story{}).Where("id = ?", id).Take(&s).Error
+	if err != nil {
+		return &Story{}, err
+	}
+	// if p.ID != 0 {
+	// 	err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+	// 	if err != nil {
+	// 		return &User{}, err
+	// 	}
+	// }
+	return s, nil
+}
+
+func (s *Story) DeleteStory(db *gorm.DB, id uint32) error {
 	var err error
 	err = db.Where("id = ?", id).Take(&Story{}).Delete(&Story{}).Error
 

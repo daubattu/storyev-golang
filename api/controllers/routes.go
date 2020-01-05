@@ -34,6 +34,8 @@ func (s *Server) initializeRoutes() {
 	s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
 	s.Router.HandleFunc("/stories", middlewares.SetMiddlewareJSON(s.GetStories)).Methods("GET")
 	s.Router.HandleFunc("/stories", middlewares.SetMiddlewareJSON(s.CreateStory)).Methods("POST")
+	s.Router.HandleFunc("/stories/{id}", middlewares.SetMiddlewareJSON(s.GetStoryById)).Methods("GET")
+	s.Router.HandleFunc("/stories/{id}", middlewares.SetMiddlewareJSON(s.UpdateStory)).Methods("PUT")
 	s.Router.HandleFunc("/stories/{id}", middlewares.SetMiddlewareJSON(s.DeleteStory)).Methods("DELETE")
 
 	s.Router.HandleFunc("/newwords", middlewares.SetMiddlewareJSON(s.GetNewWords)).Methods("GET")
