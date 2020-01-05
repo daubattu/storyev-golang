@@ -30,7 +30,7 @@ func (s *Story) FindAllStories(db *gorm.DB, partQuery string) (*[]Story, error) 
 		db = db.Where("part = ?", int8(part))
 	}
 
-	err = db.Limit(100).Find(&stories).Error
+	err = db.Find(&stories).Error
 	if err != nil {
 		return &[]Story{}, err
 	}
