@@ -8,14 +8,15 @@ import (
 )
 
 type Story struct {
-	ID         uint32    `gorm:"primary_key;auto_increment" json:"id"`
-	Name       string    `gorm:"size:255;not null;" json:"name"`
-	Part       uint8     `gorm:"size:255;not null;" json:"part"`
-	Audio      string    `gorm:"not null" json:"audio"`
-	English    string    `gorm:"not null" json:"en"`
-	Vietnamese string    `gorm:"not null" json:"vn"`
-	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID         uint32     `gorm:"primary_key;auto_increment" json:"id"`
+	Name       string     `gorm:"size:255;not null;" json:"name"`
+	Part       uint8      `gorm:"size:255;not null;" json:"part"`
+	Audio      string     `gorm:"not null" json:"audio"`
+	English    string     `gorm:"not null" json:"en"`
+	Vietnamese string     `gorm:"not null" json:"vn"`
+	NewWords   *[]NewWord `json:"new_words"`
+	CreatedAt  time.Time  `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt  time.Time  `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 func (s *Story) FindAllStories(db *gorm.DB, partQuery string) (*[]Story, error) {

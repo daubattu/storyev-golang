@@ -86,3 +86,18 @@ func (nw *NewWord) DeleteNewWord(db *gorm.DB, id uint32) error {
 	}
 	return nil
 }
+
+func (nw *NewWord) GetNewword(db *gorm.DB, id uint32) (*NewWord, error) {
+	var err error
+	err = db.Debug().Model(&NewWord{}).Where("id = ?", id).Take(&nw).Error
+	if err != nil {
+		return &NewWord{}, err
+	}
+	// if p.ID != 0 {
+	// 	err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+	// 	if err != nil {
+	// 		return &User{}, err
+	// 	}
+	// }
+	return nw, nil
+}

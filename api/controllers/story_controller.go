@@ -13,6 +13,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type StoryResponse struct {
+	story    *models.Story
+	newwords *[]models.NewWord
+}
+
 func (server *Server) CreateStory(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -114,10 +119,23 @@ func (server *Server) GetStoryById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	story := models.Story{}
+	newword := models.NewWord{}
+
 	storyGotten, err := story.GetStoryById(server.DB, uint32(uid))
+
 	if err != nil {
 		responses.ERROR(w, http.StatusBadRequest, err)
 		return
 	}
+
+	newwords, err := newword.FindNewWords(server.DB, strconv.Itoa(int(storyGotten.Part)), vars["id"])
+
+	if err != nil {
+		responses.ERROR(w, http.StatusBadGateway, err)
+		return
+	}
+
+	storyGotten.NewWords = newwords
+
 	responses.JSON(w, http.StatusOK, storyGotten)
 }

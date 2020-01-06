@@ -105,3 +105,20 @@ func (server *Server) GetNewWords(w http.ResponseWriter, r *http.Request) {
 	}
 	responses.JSON(w, http.StatusOK, newwords)
 }
+
+func (server *Server) GetNewWord(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	uid, err := strconv.ParseUint(vars["id"], 10, 32)
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	newword := models.NewWord{}
+	newwordGotten, err := newword.GetNewword(server.DB, uint32(uid))
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	responses.JSON(w, http.StatusOK, newwordGotten)
+}
