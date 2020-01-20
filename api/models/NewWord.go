@@ -8,20 +8,21 @@ import (
 )
 
 type NewWord struct {
-	ID           uint32    `gorm:"primary_key;auto_increment" json:"id"`
-	Part         uint8     `gorm:"not null" json:"part"`
-	StoryID      uint32    `gorm:"not null" json:"story_id"`
-	Word         string    `gorm:"size:255;not null;" json:"word"`
-	SpellingBre  string    `gorm:"not null" json:"spelling_bre"`
-	SpellingName string    `gorm:"not null" json:"spelling_name"`
-	MeanVN       string    `gorm:"not null" json:"mean_vn"`
-	MeanEN       string    `gorm:"not null" json:"mean_en"`
-	Type         string    `gorm:"size:255;not null;" json:"type"`
-	AudioBre     string    `gorm:"not null" json:"audio_bre"`
-	AudioName    string    `gorm:"not null" json:"audio_name"`
-	Example      string    `gorm:"not null" json:"example"`
-	CreatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID            uint32    `gorm:"primary_key;auto_increment" json:"id"`
+	Part          uint8     `gorm:"not null" json:"part"`
+	StoryID       uint32    `gorm:"not null" json:"story_id"`
+	Word          string    `gorm:"size:255;not null;" json:"word"`
+	WordInContent string    `gorm:"size:255;not null;" json:"word_in_text"`
+	SpellingBre   string    `gorm:"not null" json:"spelling_bre"`
+	SpellingName  string    `gorm:"not null" json:"spelling_name"`
+	MeanVN        string    `gorm:"not null" json:"mean_vn"`
+	MeanEN        string    `gorm:"not null" json:"mean_en"`
+	Type          string    `gorm:"size:255;not null;" json:"type"`
+	AudioBre      string    `gorm:"not null" json:"audio_bre"`
+	AudioName     string    `gorm:"not null" json:"audio_name"`
+	Example       string    `gorm:"not null" json:"example"`
+	CreatedAt     time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt     time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 func (nw *NewWord) FindNewWords(db *gorm.DB, partQuery string, storyIdQuery string) (*[]NewWord, error) {
@@ -55,17 +56,18 @@ func (nw *NewWord) CreateNewWord(db *gorm.DB) (*NewWord, error) {
 	var err error
 	err = db.Create(
 		&NewWord{
-			Word:         nw.Word,
-			SpellingBre:  nw.SpellingBre,
-			SpellingName: nw.SpellingName,
-			AudioBre:     nw.AudioBre,
-			AudioName:    nw.AudioName,
-			MeanVN:       nw.MeanVN,
-			MeanEN:       nw.MeanEN,
-			Type:         nw.Type,
-			Part:         nw.Part,
-			StoryID:      nw.StoryID,
-			Example:      nw.Example,
+			Word:          nw.Word,
+			WordInContent: nw.WordInContent,
+			SpellingBre:   nw.SpellingBre,
+			SpellingName:  nw.SpellingName,
+			AudioBre:      nw.AudioBre,
+			AudioName:     nw.AudioName,
+			MeanVN:        nw.MeanVN,
+			MeanEN:        nw.MeanEN,
+			Type:          nw.Type,
+			Part:          nw.Part,
+			StoryID:       nw.StoryID,
+			Example:       nw.Example,
 		}).Error
 
 	if err != nil {
@@ -81,17 +83,18 @@ func (nw *NewWord) UpdateNewWord(db *gorm.DB, uid uint32) (*NewWord, error) {
 	err = db.Debug().Model(&NewWord{}).Where("id = ?", uid).
 		Updates(
 			NewWord{
-				Word:         nw.Word,
-				SpellingBre:  nw.SpellingBre,
-				SpellingName: nw.SpellingName,
-				AudioBre:     nw.AudioBre,
-				AudioName:    nw.AudioName,
-				MeanVN:       nw.MeanVN,
-				MeanEN:       nw.MeanEN,
-				Type:         nw.Type,
-				Part:         nw.Part,
-				StoryID:      nw.StoryID,
-				Example:      nw.Example,
+				Word:          nw.Word,
+				WordInContent: nw.WordInContent,
+				SpellingBre:   nw.SpellingBre,
+				SpellingName:  nw.SpellingName,
+				AudioBre:      nw.AudioBre,
+				AudioName:     nw.AudioName,
+				MeanVN:        nw.MeanVN,
+				MeanEN:        nw.MeanEN,
+				Type:          nw.Type,
+				Part:          nw.Part,
+				StoryID:       nw.StoryID,
+				Example:       nw.Example,
 			}).Error
 	if err != nil {
 		return &NewWord{}, err
