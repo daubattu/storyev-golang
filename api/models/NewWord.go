@@ -13,12 +13,12 @@ type NewWord struct {
 	StoryID      uint32    `gorm:"not null" json:"story_id"`
 	Word         string    `gorm:"size:255;not null;" json:"word"`
 	SpellingBre  string    `gorm:"not null" json:"spelling_bre"`
-	SpellingNAmE string    `gorm:"not null" json:"spelling_name"`
+	SpellingName string    `gorm:"not null" json:"spelling_name"`
 	MeanVN       string    `gorm:"not null" json:"mean_vn"`
 	MeanEN       string    `gorm:"not null" json:"mean_en"`
 	Type         string    `gorm:"size:255;not null;" json:"type"`
 	AudioBre     string    `gorm:"not null" json:"audio_bre"`
-	AudioNAmE    string    `gorm:"not null" json:"audio_name"`
+	AudioName    string    `gorm:"not null" json:"audio_name"`
 	Example      string    `gorm:"not null" json:"example"`
 	CreatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
@@ -57,9 +57,9 @@ func (nw *NewWord) CreateNewWord(db *gorm.DB) (*NewWord, error) {
 		&NewWord{
 			Word:         nw.Word,
 			SpellingBre:  nw.SpellingBre,
-			SpellingNAmE: nw.SpellingNAmE,
+			SpellingName: nw.SpellingName,
 			AudioBre:     nw.AudioBre,
-			AudioNAmE:    nw.AudioNAmE,
+			AudioName:    nw.AudioName,
 			MeanVN:       nw.MeanVN,
 			MeanEN:       nw.MeanEN,
 			Type:         nw.Type,
@@ -83,9 +83,9 @@ func (nw *NewWord) UpdateNewWord(db *gorm.DB, uid uint32) (*NewWord, error) {
 			NewWord{
 				Word:         nw.Word,
 				SpellingBre:  nw.SpellingBre,
-				SpellingNAmE: nw.SpellingNAmE,
+				SpellingName: nw.SpellingName,
 				AudioBre:     nw.AudioBre,
-				AudioNAmE:    nw.AudioNAmE,
+				AudioName:    nw.AudioName,
 				MeanVN:       nw.MeanVN,
 				MeanEN:       nw.MeanEN,
 				Type:         nw.Type,
