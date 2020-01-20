@@ -12,7 +12,7 @@ type NewWord struct {
 	Part          uint8     `gorm:"not null" json:"part"`
 	StoryID       uint32    `gorm:"not null" json:"story_id"`
 	Word          string    `gorm:"size:255;not null;" json:"word"`
-	WordInContent string    `gorm:"size:255;not null;" json:"word_in_text"`
+	WordInContent string    `gorm:"size:255;not null;" json:"word_in_content"`
 	SpellingBre   string    `gorm:"not null" json:"spelling_bre"`
 	SpellingName  string    `gorm:"not null" json:"spelling_name"`
 	MeanVN        string    `gorm:"not null" json:"mean_vn"`
